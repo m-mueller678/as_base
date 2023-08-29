@@ -1,0 +1,17 @@
+[package]
+name = "as_base"
+version = "0.1.0"
+edition = "2021"
+authors = ["m-mueller678"]
+description = "Cast trait objects to some base class"
+repository = "https://github.com/m-mueller678/as_base"
+license = "MIT OR Apache-2.0"
+keywords = ["dyn", "traits","derive","cast"]
+
+[dependencies]
+as_base_proc_macro = {path="as_base_proc_macro",version="0.1.0"}
+
+[workspace]
+members=[
+  "as_base_proc_macro",
+]

@@ -1,0 +1,18 @@
+[package]
+name = "as_base_proc_macro"
+version = "0.1.0"
+edition = "2021"
+authors = ["m-mueller678"]
+description = "macros for as_base"
+repository = "https://github.com/m-mueller678/as_base"
+license = "MIT OR Apache-2.0"
+keywords = []
+
+[dependencies]
+quote = "1.0.32"
+syn = {version="2.0.28"}
+proc-macro2 = "1.0.66"
+proc-macro-crate = "1.3.1"
+
+[lib]
+proc-macro = true
