@@ -3,13 +3,11 @@
 //! No virtual dispatch is involved, the base object always begins at the same address as the enclosing object.
 //! ```
 //! # use as_base::*;
-//! struct BaseType(u64);
-//!
-//! trait SayHello: AsBase<BaseType> {
-//!     fn say_hello(&self) {
-//!         println!("hello from {}!", self.as_base().0);
-//!     }
+//! struct BaseType {
+//!     x: u64,
 //! }
+//!
+//! trait MyTrait: AsBase<BaseType> {}
 //!
 //! #[derive(AsBase)]
 //! #[repr(C)]
@@ -17,12 +15,14 @@
 //!     base: BaseType,
 //! }
 //!
-//! impl SayHello for Implementor {}
+//! impl MyTrait for Implementor {}
 //!
 //! fn main() {
-//!     let mut x = Implementor { base: BaseType(4) };
-//!     let dyn_reference: &mut dyn SayHello = &mut x;
-//!     let base: &mut BaseType = dyn_reference.as_base_mut();
+//!     let x = Implementor {
+//!         base: BaseType { x: 42 },
+//!     };
+//!     let dyn_reference = &x as &dyn MyTrait;
+//!     assert_eq!(dyn_reference.as_base().x, 42)
 //! }
 //! ```
 
