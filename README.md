@@ -15,6 +15,7 @@ trait MyTrait: AsBase<BaseType> {}
 struct Implementor {
     pub base: BaseType,
 }
+
 impl MyTrait for Implementor {}
 
 fn main() {
