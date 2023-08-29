@@ -12,7 +12,7 @@
 //! #[derive(AsBase)]
 //! #[repr(C)]
 //! struct Implementor {
-//!     base: BaseType,
+//!     pub base: BaseType,
 //! }
 //!
 //! impl MyTrait for Implementor {}

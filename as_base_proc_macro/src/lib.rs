@@ -1,6 +1,6 @@
 use proc_macro_crate::{crate_name, FoundCrate};
 use quote::quote;
-use syn::{parse_macro_input, Data, DataStruct, DeriveInput, Fields, Meta, Path};
+use syn::{parse_macro_input, Data, DataStruct, DeriveInput, Fields, Meta, Path, Visibility};
 
 fn as_base_crate() -> Path {
     match crate_name("as_base").unwrap() {
@@ -12,6 +12,8 @@ fn as_base_crate() -> Path {
 /// implements [AsBase] for a struct or tuple struct.
 ///
 /// The first field is used as base.
+/// As this makes the field publicly accessible, the field must be declared as `pub` for clarity.
+///
 /// The type must have a `#[repr(C)]` attribute.
 #[proc_macro_derive(AsBase)]
 pub fn derive_as_base(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -20,7 +22,7 @@ pub fn derive_as_base(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         panic!("type must be a struct");
     };
     let is_repr_c = input.attrs.iter().any(|x| {
-        let Meta::List(meta)=&x.meta else{return false};
+        let Meta::List(meta) = &x.meta else { return false; };
         meta.path.get_ident().map(|x| x.to_string()).as_deref() == Some("repr")
             && meta.tokens.to_string() == "C"
     });
@@ -33,6 +35,10 @@ pub fn derive_as_base(input: proc_macro::TokenStream) -> proc_macro::TokenStream
     let Some(base) = base else {
         panic!("struct must not be empty");
     };
+    assert!(
+        matches!(base.vis, Visibility::Public(_)),
+        "base field must be public"
+    );
     let base_type = &base.ty;
     let target_type = input.ident;
     let as_base_crate = as_base_crate();
