@@ -1,6 +1,6 @@
 [package]
 name = "as_base_proc_macro"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["m-mueller678"]
 description = "macros for as_base"
