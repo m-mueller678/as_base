@@ -41,7 +41,7 @@ macro_rules! sub_trait {
             }
         }
 
-        impl<B, T: AsBase<B> + ?Sized> $ExtTrait<B> for T {}
+        impl<B, T: $Trait<B> + ?Sized> $ExtTrait<B> for T {}
     };
 }
 

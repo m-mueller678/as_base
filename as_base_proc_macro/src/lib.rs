@@ -56,7 +56,9 @@ fn derive_as_base_impl(
         panic!("type must be a struct");
     };
     let is_repr_c = input.attrs.iter().any(|x| {
-        let Meta::List(meta) = &x.meta else { return false; };
+        let Meta::List(meta) = &x.meta else {
+            return false;
+        };
         meta.path.get_ident().map(|x| x.to_string()).as_deref() == Some("repr")
             && meta.tokens.to_string() == "C"
     });
